@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Find the Difference!</title>
+		<link rel="stylesheet" href="css/styles.css" />
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+	</head>
+	<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="cordova_plugins.js"></script>
+	<script type="text/javascript" src="js/finddiff_data.js"></script>
+	<script type="text/javascript" src="js/finddiff.js"></script>
+	<script type="text/javascript" src="js/finddiff_extra.js"></script>
+
+	<body>
+
+		<!-- main menu area -->
+		<div id="menuarea">
+			<div id="logo"><img src="img/logo2.png"></div>
+
+			<!-- main menu -->
+			<div id="mainmenu">
+				<div id="mmsta" class="diffbutton btnnormal">Start game</div><br/>
+				<div id="mmins" class="diffbutton btnnormal">Instructions</div><br/>
+				<div id="mmhis" class="diffbutton btnnormal">High scores</div><br/>
+			</div>
+
+			<!-- instructions -->
+			<div id="instructions" class="displaynone">
+				<div class="diffpanel">
+					Each set of photos contain 5 differences.<br/>
+					When you spot a difference, tap it.<br/>
+					Careful, when your guess is incorrect<br/>
+					you lose 10 seconds of time.<br/>
+					When you are stuck, tap the lightbulb for hints.
+				</div>
+				<div id="insok" class="diffbutton btnnormal">ok</div>
+			</div>
+
+			<!-- high scores -->
+			<div id="highscores" class="displaynone">
+				<div class="difftable difftablescore" >
+					<table>
+						<tr>
+							<td>Rank</td>
+							<td>Name</td>
+							<td>Score</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>Name 1</td>
+							<td>11111</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>Name 2</td>
+							<td>2222</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>Name 3</td>
+							<td>333</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>Name 4</td>
+							<td>44</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>Name 5</td>
+							<td>5</td>
+						</tr>
+					</table>
+				</div>
+				<div id="hisok" class="diffbutton btnnormal">ok</div>
+			</div>
+
+			<!-- about screen -->
+			<div id="aboutmenu" class="displaynone">
+				<div class="diffpanel">
+					<div class="diffpanelcontent">
+						Program by:<br/>
+						DONKEY TECHNOLOGIES<br/><br/>
+						
+					</div>
+					<div class="diffpanelcontent">
+						<div class="bdrlogo"></div>
+						<div id="versioninfo">version</div>
+					</div>
+				</div>
+				
+				<div id="infok" class="diffbutton btnnormal">ok</div>
+			</div>
+
+			<!-- debug screen -->
+			<div id="debugmenu" class="displaynone">
+				<div class="difftable difftabledebug" >
+					<table>
+						<tr>
+							<td colspan="3">Debug menu</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td id="dbgprev">&lt;&lt;</td>
+							<td id="dbgnext">&gt;&gt;</td>
+						</tr>
+						<tr>
+							<td>Photo list order</td>
+							<td id="dbgorder" colspan="2"></td>
+						</tr>
+						<tr>
+							<td>99 hints cheat enabled</td>
+							<td id="dbgcheat" colspan="2"></td>
+						</tr>
+						<tr>
+							<td colspan="3">info resolution</td>
+						</tr>
+						<tr>
+							<td colspan="3">info browser</td>
+						</tr>
+					</table>
+				</div>
+
+				<div id="dbgok" class="diffbutton btnnormal">ok</div>
+			</div>
+			
+			<div id="copyrightnotice"><h5>Donkey Technologies Games&copy;2018</h5></div>
+			<div id="mainmenuabout"><div id="mminf" class="diffbutton btnsmall">i</div></div>
+		</div>
+
+		<!-- game area -->
+		<div id="gamearea" class="displaynone">
+			<div id="gamestatus">
+				<div id="hintbtn" class="hinticon0"></div>
+				<div id="scorebar">0</div>
+				<div id="diffsfound">
+					<div class="diffscoin0"></div>
+					<div class="diffscoin0"></div>
+					<div class="diffscoin0"></div>
+					<div class="diffscoin0"></div>
+					<div class="diffscoin0"></div>
+				</div>
+				<div id="timeleft">
+					<div id="timebar">
+						<div></div>
+					</div>
+				</div>
+				<div id="pausebtn" class="pauseicon0"></div>
+			</div>
+			
+			<div class="photoarea">
+				<div class="gamemessage">
+					<h1>text</h1>
+					<input id="nameinput" value="inputtest"><br/>
+					<div id="gameback" class="diffbutton btnnormal">Back</div>
+					<div id="gameok" class="diffbutton btnnormal">Ok</div>
+				</div>
+				<div id="pausepanel" class="gamepause">
+					<h1><br/>Paused</h1>
+					<div id="pausequit" class="diffbutton btnnormal">Main menu</div>
+					<div id="pausecont" class="diffbutton btnnormal">Continue</div>
+				</div>
+				<div id="ratepanel" class="gamepause">
+					<h1><br/>Hints</h1>
+					You can use hints<br/>
+					to see some differences.<br/><br/>
+					Please rate this game<br/>
+					to unlock 3 hints per game.<br/>
+					&#9733;  &#9733;  &#9733;  &#9733;  &#9733;<br/> 
+					<div id="rateback" class="diffbutton btnnormal">Back</div>
+					<div id="rateok" class="diffbutton btnnormal">Rate this game</div>
+				</div>
+				<div class="photocontainer">
+					<canvas id="myCanvas1" class="photocanvas" width="480" height="512"></canvas>
+				</div>
+				
+				<div class="photocontainer">
+					<canvas id="myCanvas2" class="photocanvas" width="480" height="512"></canvas>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>
