@@ -134,7 +134,7 @@ var finddiff = {
 		document.addEventListener("pause", function(){clearInterval(finddiff.timerId);finddiff.quitfromgame(1);}, false);
 
 		// game setting
-		finddiff.diffscount = 5;
+		finddiff.diffscount = 1;
 
 		// trigger resize once at startup
 		$(window).trigger('resize');
@@ -378,8 +378,8 @@ var finddiff = {
 	nextlevel: function () {
 		// reset variables
 		finddiff.level++;
-
-		// next photo in random order
+		if(finddiff.level <= 63){
+				// next photo in random order
 		finddiff.orderindex = parseInt((finddiff.orderindex+1) % photodata.length);
 		finddiff.photoindex = finddiff.photoorder[finddiff.orderindex];
 
@@ -434,6 +434,18 @@ var finddiff = {
 		finddiff.imgloaded = 0;
 		finddiff.image1.src = 'photos/' + photodata[finddiff.photoindex].fileorg;
 		finddiff.image2.src = 'photos/' + photodata[finddiff.photoindex].fileedit;
+		}else{
+			//game over and enter name to save highest score
+		// highscore enter name
+					$('.gamemessage h1').text('YOU HAVE REACHED THE END OF THE GAME!!');
+					finddiff.mostrecentname = $('#nameinput').val();
+					finddiff.hiscoreinsert();
+					// go to game over part
+					
+					finddiff.state = STATE_ENTERNAME;
+					finddiff.ongametimer();
+		}
+	
 	},
 
 	// -------------------------------------
@@ -562,8 +574,8 @@ var finddiff = {
 					finddiff.timeleft = finddiff.timeleft - 1;
 					finddiff.timerbarupdate();
 					// add to score
-					finddiff.score = finddiff.score + 5;
-					$('#scorebar').text(finddiff.score);
+					//finddiff.score = finddiff.score + 5;
+					//$('#scorebar').text(finddiff.score);
 				} else {
 					// all seconds added, goto "next level" screen
 					clearInterval(finddiff.timerId);
@@ -643,6 +655,7 @@ var finddiff = {
 
 		// check if time is up
 		if (finddiff.timeleft <= 0) {
+			
 			// cancel timer
 			finddiff.state = STATE_GAMEEND; // outro
 			finddiff.ongametimer(); // go immediately, don't wait for timer
@@ -1013,7 +1026,14 @@ var finddiff = {
 			finddiff.timerId = setInterval(finddiff.ongametimer, 1000);
 		};
 	},
-
+	dialogconfirm: function (title, msg, btn1, btn2, functionconfirm) {
+		navigator.notification.confirm(
+			msg,                // message
+			functionconfirm,    // callback to invoke with index of button pressed
+			title,              // title
+			(btn1 + ',' + btn2) // buttonLabels
+		);
+	},
 	// -------------------------------------
 	// in-game menu button pressed
 	// -------------------------------------
@@ -1029,7 +1049,9 @@ var finddiff = {
 				$('#gamearea').show();
 				// restore previous game?
 				if (savedgame != null) {
-					platspec.dialogconfirm('Continue game', 'Continue previous game or start a new game?', 'Continue', 'New', finddiff.continuegame);
+					//platspec.dialogconfirm('Continue game', 'Continue previous game or start a new game?', 'Continue', 'New', finddiff.continuegame);
+					finddiff.dialogconfirm('Continue game', 'Continue previous game or start a new game?', 'Continue', 'New', finddiff.continuegame);
+					
 				} else {
 					finddiff.newgame();
 				}
@@ -1100,7 +1122,8 @@ var finddiff = {
 				break;
 			case "pausequit":
 				platspec.play('back');
-				platspec.dialogconfirm('Leave game', 'Leave this game, are you sure?', 'Yes', 'No', finddiff.quitfromgame);
+				//platspec.dialogconfirm('Leave game', 'Leave this game, are you sure?', 'Yes', 'No', finddiff.quitfromgame);
+				finddiff.dialogconfirm('Leave game', 'Leave this game, are you sure?', 'Yes', 'No', finddiff.quitfromgame);
 				break;
 			case "rateback":
 				platspec.play('input');
