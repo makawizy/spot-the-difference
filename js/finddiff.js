@@ -1125,7 +1125,8 @@ var finddiff = {
 				//platspec.dialogconfirm('Leave game', 'Leave this game, are you sure?', 'Yes', 'No', finddiff.quitfromgame);
 				
 				//finddiff.dialogconfirm('Leave game', 'Leave this game, are you sure?', 'Yes', 'No', finddiff.quitfromgame(1));
-				finddiff.quitfromgame(1);
+				//finddiff.quitfromgame(1);
+				finddiff.pausegame(false);
 				break;
 			case "rateback":
 				platspec.play('input');
